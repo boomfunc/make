@@ -1,6 +1,6 @@
 # This Makefile describes global git options and git shortcuts.
 
-export GIT_SSH_COMMAND='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+export GIT_SSH_COMMAND=ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
 
 # Tell git to use ssh clone instead https (for private repos).
 # Workaround with invoking at initialization stage of this Makefile.
