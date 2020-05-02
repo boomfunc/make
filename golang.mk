@@ -46,19 +46,19 @@ VERSION := LOCAL
 
 
 # Targets for building executable binaries.
-$(BASE)-Linux-x86_64: $(GO) $(GO_SOURCE_FILES)
+bin-Linux-x86_64: $(GO) $(GO_SOURCE_FILES)
 	#### Node( '$(NODE)' ).Call( '$@' )
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GO) build \
 		-v \
 		-ldflags="$(foreach ldflag,$(GOLANG_BUILD_LDFLAGS),-X '$(ldflag)')" \
-		-o $(BASE)-Linux-x86_64
+		-o bin-Linux-x86_64
 
 
 # Targets for building golang plugin libraries.
-$(BASE)-Linux-x86_64-plugin.so: $(GO) $(GO_SOURCE_FILES)
+plugin-Linux-x86_64.so: $(GO) $(GO_SOURCE_FILES)
 	#### Node( '$(NODE)' ).Call( '$@' )
 	GOOS=linux GOARCH=amd64 $(GO) build \
 		-v \
 		-buildmode=plugin \
 		-ldflags="$(foreach ldflag,$(GOLANG_BUILD_LDFLAGS),-X '$(ldflag)')" \
-		-o $(BASE)-Linux-x86_64-plugin.so
+		-o plugin-Linux-x86_64.so
