@@ -1,19 +1,15 @@
 # This Makefile describes the behavior of a node that was written on golang.
 include git.mk
 
-
 # Get the go bin path.
 GO := $(or $(shell which go),/usr/local/bin/go)
-
 
 # Set golang global env variables.
 export GOPRIVATE=gitea.boomfunc.io,github.com/boomfunc
 
-
 # Find source files (using find instead of wildcard resolves any depth issue).
 GO_SOURCE_FILES := $(shell find * -type f -name '*.go')
 GO_TEST_SOURCE_FILES := $(shell find * -type f -name '*_test.go')
-
 
 .PHONY: golang-fmt
 golang-fmt: $(GO) $(GO_SOURCE_FILES)
@@ -21,7 +17,6 @@ golang-fmt: $(GO) $(GO_SOURCE_FILES)
 	$(GO) fix ./...
 	$(GO) fmt ./...
 	$(GO) vet ./...
-
 
 # Performance section. Testing, benchmarking, profiling, tracing, debugging, etc.
 .PHONY: golang-test
@@ -32,14 +27,12 @@ golang-test: $(GO) $(GO_TEST_SOURCE_FILES)
 		./...
 	$(GO) tool cover -html=coverage.out -o=coverage.html
 
-
 # Build and run section. Convert source code to executable and provide process.
 # Provide multiple options for building (bin, lib, etc).
 
 # Calculate build variables.
 TIMESTAMP := $(shell date +%s)
 VERSION := LOCAL
-
 
 # Targets for building executable binaries.
 bin-Linux-x86_64: $(GO) $(GO_SOURCE_FILES)
@@ -48,7 +41,6 @@ bin-Linux-x86_64: $(GO) $(GO_SOURCE_FILES)
 		-v \
 		-ldflags="$(foreach ldflag,$(GOLANG_BUILD_LDFLAGS),-X '$(ldflag)')" \
 		-o bin-Linux-x86_64
-
 
 # Targets for building golang plugin libraries.
 plugin-Linux-x86_64.so: $(GO) $(GO_SOURCE_FILES)

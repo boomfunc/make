@@ -2,14 +2,8 @@
 include common.mk
 include git.mk
 
-
-# Get the go bin path.
-DOCKER := $(shell which docker)
-ifeq ($(DOCKER),)
-	# Case when bainary is not installed. We have target below for installing stable version.
-	DOCKER := /usr/local/bin/docker
-endif
-
+# Get the docker bin path.
+DOCKER := $(or $(shell which docker),/usr/local/bin/docker)
 
 # Define docker environment. Override defaults in node's Makefile.
 DOCKERFILE?=Dockerfile
@@ -19,7 +13,6 @@ DOCKER_CONTEXT?=.
 # `latest` can be overriden in node's Makefile.
 DOCKER_IMAGE_TAG?=latest
 DOCKER_IMAGE_TAGS=$(DOCKER_IMAGE_TAG) $(GIT_SHORT_HASH)
-
 
 .PHONY: docker-build
 docker-build:
@@ -33,7 +26,6 @@ docker-build:
 		$(foreach arg,$(DOCKER_BULD_ARGS),--build-arg $(arg)) \
 		$(foreach tag,$(DOCKER_IMAGE_TAGS),-t $(DOCKER_REPOSITORY):$(tag)) \
 		$(DOCKER_CONTEXT)
-
 
 .PHONY: docker-push
 docker-push:
