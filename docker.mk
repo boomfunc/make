@@ -14,7 +14,6 @@ endif
 # Define docker environment. Override defaults in node's Makefile.
 DOCKERFILE?=Dockerfile
 DOCKER_CONTEXT?=.
-DOCKER_SSH_KEY?=$(HOME)/.ssh/id_rsa
 
 # Docker image tags to build. By default we build `latest` tag and git short hash.
 # `latest` can be overriden in node's Makefile.
@@ -30,6 +29,7 @@ docker-build:
 	$(DOCKER) build \
 		--no-cache \
 		-f $(DOCKERFILE) \
+		--build-arg SSH_PRIVATE_KEY='$(file < $(HOME)/.ssh/id_rsa)' \
 		$(foreach arg,$(DOCKER_BULD_ARGS),--build-arg $(arg)) \
 		$(foreach tag,$(DOCKER_IMAGE_TAGS),-t $(DOCKER_REPOSITORY):$(tag)) \
 		$(DOCKER_CONTEXT)
