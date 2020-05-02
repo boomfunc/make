@@ -3,11 +3,7 @@ include git.mk
 
 
 # Get the go bin path.
-GO := $(shell which go)
-ifeq ($(GO),)
-	# Case when bainary is not installed. We have target below for installing stable version.
-	GO := /usr/local/go/bin/go
-endif
+GO := $(or $(shell which go),/usr/local/bin/go)
 
 
 # Set golang global env variables.
