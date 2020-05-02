@@ -29,7 +29,7 @@ docker-build:
 	$(DOCKER) build \
 		--no-cache \
 		-f $(DOCKERFILE) \
-		--build-arg SSH_PRIVATE_KEY='$(file < $(HOME)/.ssh/id_rsa)' \
+		--build-arg SSH_PRIVATE_KEY="$$(cat $(HOME)/.ssh/id_rsa)" \
 		$(foreach arg,$(DOCKER_BULD_ARGS),--build-arg $(arg)) \
 		$(foreach tag,$(DOCKER_IMAGE_TAGS),-t $(DOCKER_REPOSITORY):$(tag)) \
 		$(DOCKER_CONTEXT)
