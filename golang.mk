@@ -40,7 +40,8 @@ bin-Linux-x86_64: $(GO) $(GO_SOURCE_FILES)
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GO) build \
 		-v \
 		-ldflags="$(foreach ldflag,$(GOLANG_BUILD_LDFLAGS),-X '$(ldflag)')" \
-		-o bin-Linux-x86_64
+		-o bin-Linux-x86_64 \
+		./...
 
 # Targets for building golang plugin libraries.
 plugin-Linux-x86_64.so: $(GO) $(GO_SOURCE_FILES)
@@ -49,4 +50,5 @@ plugin-Linux-x86_64.so: $(GO) $(GO_SOURCE_FILES)
 		-v \
 		-buildmode=plugin \
 		-ldflags="$(foreach ldflag,$(GOLANG_BUILD_LDFLAGS),-X '$(ldflag)')" \
-		-o plugin-Linux-x86_64.so
+		-o plugin-Linux-x86_64.so \
+		./...
